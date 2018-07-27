@@ -1,0 +1,14 @@
+<h1>
+  <%= @document.title %>
+</h1>
+
+<h4>
+  <%= @document.description %>
+</h4>
+<%= render 'files' %>
+
+<div class="col-md-4">
+  <%= link_to 'Labot', edit_document_path(@document), class: 'btn btn-warning' %>
+  <%= link_to 'Dzēst', @document, method: :delete, data: { confirm: 'Vai tiešām dzēst dokumentu?' } , class: 'btn btn-danger' %>
+</div>
+<%= link_to 'Atgriezties', documents_path %>

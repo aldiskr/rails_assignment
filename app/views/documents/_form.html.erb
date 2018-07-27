@@ -1,0 +1,32 @@
+<%= form_with(model: document, local: true) do |form| %>
+  <% if document.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+
+      <ul>
+      <% document.errors.each do |attr, message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, 'Nosaukums' %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, 'Apraksts' %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :files, 'Pielikumi' %>
+    <%= form.file_field :files, multiple: true, class:'form-control-file' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Saglabāt', class:'btn btn-primary' %>
+  </div>
+<% end %>

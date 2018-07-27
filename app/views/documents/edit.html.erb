@@ -1,0 +1,17 @@
+<h1>Labot dokumentu</h1>
+
+<%= render 'form', document: @document %>
+
+<% if @document.files.any? %>
+  <strong>Pievienotie faili:</strong>
+  <table class="table table-condensed">
+    <tbody>
+      <% @document.files.each do |file| %>
+        <tr>
+          <td><%=link_to file.filename, rails_blob_path(file, disposition: "attachment") %></td>
+          <td><%= link_to 'x', delete_attachment_path(document_id: @document.id, id: file.id), class: 'btn btn-danger btn-xs', data: { confirm: 'Vai tiešām dzēst failu?' }%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

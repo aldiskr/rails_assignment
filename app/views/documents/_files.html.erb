@@ -1,0 +1,10 @@
+<% if @document.files.any? %>
+  <strong>Pievienotie faili:</strong>
+  <table class="table">
+  <% @document.files.each do |file| %>
+    <tr>
+      <td><%=link_to file.filename, rails_blob_path(file, disposition: "attachment") %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
