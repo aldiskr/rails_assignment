@@ -1,14 +1,31 @@
-<h1>
-  <%= @document.title %>
-</h1>
-
-<h4>
-  <%= @document.description %>
-</h4>
-<%= render 'files' %>
-
-<div class="col-md-4">
-  <%= link_to 'Labot', edit_document_path(@document), class: 'btn btn-warning' %>
-  <%= link_to 'Dzēst', @document, method: :delete, data: { confirm: 'Vai tiešām dzēst dokumentu?' } , class: 'btn btn-danger' %>
-</div>
-<%= link_to 'Atgriezties', documents_path %>
+<div class="container">
+  <h1><%= @document.name %></h1>
+  <p>
+    <%=@document.description%>
+  </p>
+  <% if @document.document_attachments.any? %>
+  <div class="row">
+    <strong>Pievienotie faili:</strong>
+    <table class="table table-condensed">
+      <% @document_attachments.each do |attachment|%>
+      <tr>
+        <td><%= link_to attachment.attachment.file.filename, "#{attachment.attachment}" , download: "#{attachment.attachment.file.filename}"%></td>
+      </tr>
+      <%end%>
+    </table>
+  </div>
+  <%end%>
+  <div class="row">
+    <div class="col-md-1">
+      <%= button_to 'Labot', edit_document_path(@document), class: 'btn btn-warning', method: 'get'%>
+    </div>
+    <div class="col-md1">
+      <%= button_to 'Dzēst', document_path(@document),
+      class: 'btn btn-danger', method: :delete,
+        data: { confirm: 'Vai tiešām dzēst dokumentu?' } %>
+      </div>
+    </div>
+    <div class="row">
+      <%= link_to 'Atgriezties', documents_path %>
+    </div>
+  </div>

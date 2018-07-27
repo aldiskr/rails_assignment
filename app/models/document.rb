@@ -1,4 +1,4 @@
 class Document < ApplicationRecord
-  validates_presence_of :title, message: 'Nosaukums nevar būt tukšs'
-  has_many_attached :files
+  has_many :document_attachments, dependent: :destroy
+  accepts_nested_attributes_for :document_attachments
 end

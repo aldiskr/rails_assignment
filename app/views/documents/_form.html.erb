@@ -1,32 +1,38 @@
-<%= form_with(model: document, local: true) do |form| %>
-  <% if document.errors.any? %>
-    <div class="alert alert-danger">
-      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
-
-      <ul>
-      <% document.errors.each do |attr, message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+<%= form_with model: @document, local: true do |form| %>
+<div class="form-group">
+  <%= form.label :name, 'Nosaukums' %><br>
+  <%= form.text_field :name, class: 'form-control' %>
+</div>
+<div class="form-group">
+  <%= form.label :description, 'Apraksts' %><br>
+  <%= form.text_area :description, class: 'form-control' %>
+</div>
+<% if @document.new_record? %>
+<div class="form-group">
+  <%= form.fields_for :document_attachments do |p| %>
+  <%= p.label :attachment, 'Pielikumi' %><br>
+  <%= p.file_field :attachment, :multiple => true, name: "document_attachments[attachment][]"%>
+</div>
+<%end%>
+<%end%>
+<% if !@document.new_record? %>
+<div class="row">
+  <strong>Faili:</strong>
+  <table class="table table-condensed">
+    <tbody>
+      <% @document_attachments.each do |attachment|%>
+      <tr>
+        <td><%= link_to attachment.attachment.file.filename, "#{attachment.attachment}" , download: "#{attachment.attachment.file.filename}"%></td>
+        <td><%= link_to 'x', [attachment.document, attachment],
+        class: 'btn btn-danger btn-xs', method: :delete,
+          data: { confirm: 'Vai tiešām dzēst dokumentu?' } %></td>
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
   <% end %>
-
   <div class="form-group">
-    <%= form.label :title, 'Nosaukums' %>
-    <%= form.text_field :title, class: 'form-control' %>
+    <%= form.submit 'Saglabāt', class: 'btn btn-primary btn-md' %>
   </div>
-
-  <div class="form-group">
-    <%= form.label :description, 'Apraksts' %>
-    <%= form.text_area :description, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :files, 'Pielikumi' %>
-    <%= form.file_field :files, multiple: true, class:'form-control-file' %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit 'Saglabāt', class:'btn btn-primary' %>
-  </div>
-<% end %>
+  <% end %>

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  resources :documents
-  root 'documents#index'
 
-  get 'delete_attachment', to: 'documents#delete_attachment'
+  root 'documents#index'
+  resources :documents do
+  resources :document_attachments
+end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

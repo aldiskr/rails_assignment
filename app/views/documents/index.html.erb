@@ -1,13 +1,15 @@
-<nav class="navbar">
-  <%= link_to 'Jauns dokuments', new_document_path, class: 'btn btn-primary' %>
-</nav>
-<table class="table table-striped">
-  <tbody>
+<div class="row">
+  <%= button_to 'Jauns dokuments', new_document_path, method: 'get', class: 'btn btn-primary'%>
+</div>
+</br>
+<div class="row">
+  <table class="table table-striped">
     <% @documents.each do |document| %>
-      <tr>
-        <td><%= link_to document.title, document_path(document) %></td>
-        <td><%= document.description.truncate(30) %></td>
-      </tr>
+    <tr>
+      <td><%= link_to document.name, document_path(document) %></td>
+      <td><%= truncate(document.description, :length => 30)%></td>
+    </tr>
     <% end %>
-  </tbody>
-</table>
+  </table>
+
+</div>
